@@ -3,6 +3,7 @@ using MarsKapu.Application.BusinessLogic;
 using MarsKapu.Application.Contracts.BusinessLogic;
 using MarsKapu.Application.Contracts.Repositories;
 using MarsKapu.Application.Contracts.Services;
+using MarsKapu.Controllers;
 using MarsKapu.Repositories;
 using MarsKapu.Services;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,7 +21,6 @@ try
 }
 catch (Exception)
 {
-
 	throw;
 }
 
@@ -41,6 +41,7 @@ static IHostBuilder CreateHostBuilder(string[] args)
             services.AddSingleton<ISupplyService, SupplyService>();
             services.AddSingleton<ILifeSupportSystemService, LifeSupportSystemService>();
 
+            services.AddSingleton<ApplicationController>();
             services.AddSingleton<App>();
         });
 }

@@ -1,4 +1,5 @@
 ﻿using MarsKapu.Application.Contracts.BusinessLogic;
+using MarsKapu.Controllers;
 using MarsKapu.DataContracts.Models;
 using Spectre.Console;
 using System;
@@ -11,25 +12,15 @@ namespace MarsKapu
 {
     public class App
     {
-        private readonly IApplicationBusinessLogic appBl;
+        private readonly ApplicationController appController;
 
-        public App(IApplicationBusinessLogic appBl)
+        public App(ApplicationController appController)
         {
-            this.appBl = appBl;
+            this.appController = appController;
         }
         public void Run(string[] args)
         {
-            News news = appBl.GetCurrentNews().First();
-            var table = new Table();
-
-            // Add some columns
-            table.AddColumn(new TableColumn(news.Title).Centered());
-
-            // Add some rows
-            table.AddRow(news.Text);
-
-            // Render the table to the console
-            AnsiConsole.Write(table);
+            appController.Login();
         }
     }
 }
