@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.0" />
+    <PackageReference Include="Spectre.Console" Version="0.45.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MarsKapu.Application.Contracts\MarsKapu.Application.Contracts.csproj" />
+    <ProjectReference Include="..\MarsKapu.Application\MarsKapu.Application.csproj" />
+    <ProjectReference Include="..\MarsKapu.Repositories\MarsKapu.Repositories.csproj" />
+    <ProjectReference Include="..\MarsKapu.Services\MarsKapu.Services.csproj" />
+  </ItemGroup>
+
+</Project>
