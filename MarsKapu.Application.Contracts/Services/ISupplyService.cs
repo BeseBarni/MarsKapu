@@ -11,5 +11,8 @@ namespace MarsKapu.Application.Contracts.Services
     {
         public void RequestSupplies(List<Supply> supplies);
         //public ShipmentStatus GetShipmentStatus();
+        public List<Supply> GetSupplyInventory ();
+        public void AddSupply(Supply supply);
+        public void AddSupplyList(List<Supply> supplies);
     }
 }
