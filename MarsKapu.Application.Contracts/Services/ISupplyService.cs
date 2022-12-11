@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MarsKapu.DataContracts.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,7 @@ namespace MarsKapu.Application.Contracts.Services
 {
     public interface ISupplyService
     {
+        public void RequestSupplies(List<Supply> supplies);
+        //public ShipmentStatus GetShipmentStatus();
     }
 }

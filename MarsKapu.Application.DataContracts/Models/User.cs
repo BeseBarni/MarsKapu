@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MarsKapu.DataContracts.Models
 {
-    internal class User
+    public class User
     {
     }
 }
