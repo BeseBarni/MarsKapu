@@ -1,4 +1,5 @@
 ﻿using MarsKapu.Application.Contracts.BusinessLogic;
+using MarsKapu.DataContracts.Models;
 using Spectre.Console;
 using Spectre.Console.Advanced;
 using System;
@@ -9,47 +10,50 @@ using System.Threading.Tasks;
 
 namespace MarsKapu.Controllers
 {
-    public class ApplicationController
+    public class ApplicationController : BaseController
     {
         private readonly IApplicationBusinessLogic appBL;
+        protected override Color Color { get; set; } = new Color(255, 77, 0);
+        protected override string Title { get; set; } = "Martian Gate";
 
         public ApplicationController(IApplicationBusinessLogic appBL)
         {
             this.appBL = appBL;
         }
 
-        public bool Login()
+
+        public User? Login()
         {
+            AppHeader();
 
-
-            var name = AnsiConsole.Ask<string>("Enter your [green]name[/]?");
+            var name = AnsiConsole.Ask<string>("Enter your [orangered1]name[/]: ");
 
             string password = AnsiConsole.Prompt(
-                new TextPrompt<string>("Enter [green]password[/]?")
+                new TextPrompt<string>("Enter [orangered1]password[/]: ")
                     .PromptStyle("red")
                     .Secret()
                     );
-
-            if (!AnsiConsole.Confirm("Confirm login?"))
-            {
-                return false;
-            }
-            AnsiConsole.Progress()
-                .Start(ctx =>
+            AnsiConsole.WriteLine();
+            AnsiConsole.Status()
+                .Start("[orangered1]Running ID check[/]", ctx =>
                 {
-                    // Define tasks
-                    var task1 = ctx.AddTask("[green]Loggin in[/]");
-                    
+                    // Simulate some work
+                    ctx.Spinner(Spinner.Known.BouncingBar);
+                    AnsiConsole.MarkupLine("[gray]LOG: [/] Searching in Martian database");
+                    Thread.Sleep(900);
+                    AnsiConsole.MarkupLine(String.Format("[gray]LOG: [/] {0} [green]online[/]",name));
+                    Thread.Sleep(900);
+                    ctx.Status("Checking priviliges");
+                    ctx.Spinner(Spinner.Known.SimpleDots);
 
-                    while (!ctx.IsFinished)
-                    {
-                        Thread.Sleep(50);
-                        task1.Increment(1.5);
-
-                    }
+                    AnsiConsole.MarkupLine("[gray]LOG: [/] Privilige found");
+                    Thread.Sleep(900);                   
                 });
 
-            return true;
+            return new User() { Name = name, Id = 21313 };
+
         }
+
+        
     }
 }
