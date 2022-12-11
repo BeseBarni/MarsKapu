@@ -42,6 +42,7 @@ static IHostBuilder CreateHostBuilder(string[] args)
             services.AddSingleton<ILifeSupportSystemService, LifeSupportSystemService>();
 
             services.AddSingleton<ApplicationController>();
+            services.AddSingleton<ResearchController>();
             services.AddSingleton<App>();
         });
 }

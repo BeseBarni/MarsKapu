@@ -13,6 +13,7 @@ namespace MarsKapu.Application.BusinessLogic
     {
         private readonly INewsDataRepository newsRepo;
 
+        
         public ApplicationBusinessLogic(INewsDataRepository newsRepo)
         {
             this.newsRepo = newsRepo;
