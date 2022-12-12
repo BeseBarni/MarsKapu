@@ -9,13 +9,11 @@
   <ItemGroup>
     <None Remove="Repositories\DataBase\News.txt" />
     <None Remove="Repositories\DataBase\Wisdom.txt" />
+    <None Remove="Repositories\DataBase\Research.txt" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Repositories\DataBase\News.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Repositories\DataBase\Wisdom.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>

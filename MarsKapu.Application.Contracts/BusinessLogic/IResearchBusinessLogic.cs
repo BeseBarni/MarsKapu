@@ -10,6 +10,6 @@ namespace MarsKapu.Application.Contracts.BusinessLogic
     public interface IResearchBusinessLogic
     {
         public List<Research>GetCurrentResearchList();
-        public bool AddResearch(Research research);
+        public void AddResearch(Research research);
     }
 }

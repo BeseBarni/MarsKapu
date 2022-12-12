@@ -12,12 +12,35 @@ namespace MarsKapu.Repositories
     {
         public void AddResearch(Research research)
         {
-            throw new NotImplementedException();
+            if (GetCurrentResearchList().Where(p => p.Title == research.Title).Count() == 1)
+            {
+                throw new Exception("Already have this one in the database");
+            }
+            using (StreamWriter w = new StreamWriter("Repositories/DataBase/Research.txt", append: true))
+            {
+                w.WriteLine(research);
+            }
         }
 
         public List<Research> GetCurrentResearchList()
         {
-            throw new NotImplementedException();
+            List<Research> researches = new List<Research>();
+            using (StreamReader r = new StreamReader("Repositories/DataBase/Research.txt"))
+            {
+                while (r.EndOfStream == false)
+                {
+                    string line = r.ReadLine();
+                    var data = line.Split(";");
+                    int id = int.Parse(data[0]);
+                    string title = data[1];
+                    string text= data[2];
+                    DateTime published = DateTime.Parse(data[4]);
+
+                    researches.Add(new Research(id, title, text, published));
+                }
+
+            }
+            return researches;
         }
     }
 }

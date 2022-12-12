@@ -1,4 +1,5 @@
 ﻿using MarsKapu.Application.Contracts.BusinessLogic;
+using MarsKapu.Application.Contracts.Repositories;
 using MarsKapu.DataContracts.Models;
 using System;
 using System.Collections.Generic;
@@ -10,14 +11,15 @@ namespace MarsKapu.Application.BusinessLogic
 {
     public class ResearchBusinessLogic : IResearchBusinessLogic
     {
-        public bool AddResearch(Research research)
+        private readonly IResearchDataRepository reserachRepo;
+        public void AddResearch(Research research)
         {
-            throw new NotImplementedException();
+           reserachRepo.AddResearch(research);
         }
 
         public List<Research> GetCurrentResearchList()
         {
-            throw new NotImplementedException();
+            return reserachRepo.GetCurrentResearchList();
         }
     }
 }
