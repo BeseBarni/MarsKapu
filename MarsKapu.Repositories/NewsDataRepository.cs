@@ -17,9 +17,10 @@ namespace MarsKapu.Repositories
 
         public List<News> GetCurrentNews()
         {
-            return new List<News> { new News() { Title = "Test", Text = "Test Text"} };
+            return new List<News> { new News() { Title = "Test", Text = "Test Text" } };
         }
-
+        
+        //Id;Title;Text;Approved;Date
         public string GetMessageOfTheDay()
         {
             throw new NotImplementedException();
