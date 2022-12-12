@@ -10,9 +10,29 @@ namespace MarsKapu.Repositories
 {
     public class NewsDataRepository : INewsDataRepository
     {
+        public void AddNews(News news)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<News> GetCurrentNews()
         {
             return new List<News> { new News() { Title = "Test", Text = "Test Text"} };
+        }
+
+        public string GetMessageOfTheDay()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<News> GetUnapprovedNews()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateNews(News news)
+        {
+            throw new NotImplementedException();
         }
     }
 }

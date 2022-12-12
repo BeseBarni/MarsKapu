@@ -18,9 +18,25 @@ namespace MarsKapu.Application.BusinessLogic
         {
             this.newsRepo = newsRepo;
         }
+
+        public bool AddNews(News news)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool AuthenticateUser(User user)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<News> GetCurrentNews()
         {
             return newsRepo.GetCurrentNews();
+        }
+
+        public string GetMessageOfTheDay()
+        {
+            throw new NotImplementedException();
         }
     }
 }

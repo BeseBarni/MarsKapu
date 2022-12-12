@@ -6,6 +6,8 @@ using MarsKapu.Application.Contracts.Services;
 using MarsKapu.Controllers;
 using MarsKapu.Repositories;
 using MarsKapu.Services;
+using MarsKapu.State;
+using MarsKapu.Utilities;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Spectre.Console;
@@ -43,6 +45,11 @@ static IHostBuilder CreateHostBuilder(string[] args)
 
             services.AddSingleton<ApplicationController>();
             services.AddSingleton<ResearchController>();
+            services.AddSingleton<LifeSupportController>();
+            services.AddSingleton<SupplyController>();
+
+            services.AddSingleton<AppState>();
+            services.AddSingleton<ControllerProvider>();
             services.AddSingleton<App>();
         });
 }

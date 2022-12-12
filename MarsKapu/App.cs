@@ -2,6 +2,8 @@
 using MarsKapu.Controllers;
 using MarsKapu.DataContracts.Enums;
 using MarsKapu.DataContracts.Models;
+using MarsKapu.State;
+using MarsKapu.Utilities;
 using Microsoft.Extensions.Configuration;
 using Spectre.Console;
 using System;
@@ -14,47 +16,23 @@ namespace MarsKapu
 {
     public class App
     {
-        private readonly ApplicationController appController;
-        private readonly ResearchController researchController;
-        private User currentUser;
-        bool running = true;
-        public App(ApplicationController appController, ResearchController researchController)
+        private readonly AppState appState;
+        private readonly ControllerProvider controllerProvider;
+
+        public App(AppState appState, ControllerProvider controllerProvider)
         {
-            this.appController = appController;
-            this.researchController = researchController;
+            this.appState = appState;
+            this.controllerProvider = controllerProvider;
         }
         public void Run(string[] args)
         {
-            
-            
-            while (running)
+                    
+            while (appState.Running)
             {
-                if(currentUser == null)
-                {
-                    currentUser = appController.Login();
-                }
-                else
-                {
-                    ChooseMenu(Authority.COLONY_LEADER);
-                }
-
+                controllerProvider.SetController(controllerProvider.CurrentController.ShowMenu());                
             }
             
         }
 
-        public void ChooseMenu(Authority auth)
-        {
-            appController.AppHeader(currentUser.Name);
-            Dictionary<string, Action> menuPoints = new Dictionary<string, Action>();
-            menuPoints.Add("Research", () => researchController.ShowResearchList(currentUser.Name));
-            menuPoints.Add("Logout", () => currentUser = null);
-            menuPoints.Add("Exit", () => running = false);
-
-            var menuPoint = AnsiConsole.Prompt(
-                new SelectionPrompt<string>()
-                .AddChoices(menuPoints.Keys.ToArray())
-                );
-            menuPoints[menuPoint].Invoke();
-        }
     }
 }

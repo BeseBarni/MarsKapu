@@ -10,5 +10,6 @@ namespace MarsKapu.DataContracts.Models
     {
         public string Title { get; set; }
         public string Text { get; set; }
+        public bool Approved { get; set; }
     }
 }

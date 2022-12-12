@@ -1,4 +1,7 @@
-﻿using Spectre.Console;
+﻿using MarsKapu.Application.Contracts.Controllers;
+using MarsKapu.DataContracts.Enums;
+using MarsKapu.State;
+using Spectre.Console;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,17 +12,22 @@ namespace MarsKapu.Controllers
 {
     public abstract class BaseController
     {
+        protected readonly AppState appState;
 
         abstract protected Color Color { get; set; }
         abstract protected string Title { get; set; }
 
-        public virtual void AppHeader(string name = "")
+        public BaseController(AppState appState)
+        {
+            this.appState = appState;
+        }
+        public virtual void AppHeader()
         {
             AnsiConsole.Clear();
             Rule rule;
-            if (name != "")
+            if (appState.CurrentUser != null)
             {
-                rule = new Rule(name);
+                rule = new Rule(appState.CurrentUser.Name);
             }
             else
             {
@@ -38,5 +46,13 @@ namespace MarsKapu.Controllers
             rule.RuleStyle(StyleExtensions.Foreground(new Style(), Color));
             AnsiConsole.Write(rule);
         }
+
+        public MenuChoice LogOut()
+        {
+            appState.CurrentUser = null;
+            return MenuChoice.APPLICATION;
+        }
+
+        public abstract MenuChoice ShowMenu();
     }
 }

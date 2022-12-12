@@ -9,5 +9,34 @@ namespace MarsKapu.Application.BusinessLogic
 {
     public class LifeSupportSystemBusinessLogic : ILifeSupportSystemBusinessLogic
     {
+        public bool ActivateFailSafeSystem()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool PowerOxigenSystem()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool PowerSoilSystem()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool ShutdownOxigenSystem()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool ShutdownSoilSystem()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool SwitchBackUpPower()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

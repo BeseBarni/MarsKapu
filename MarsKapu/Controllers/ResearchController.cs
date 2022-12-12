@@ -1,5 +1,7 @@
 ﻿using MarsKapu.Application.Contracts.BusinessLogic;
+using MarsKapu.DataContracts.Enums;
 using MarsKapu.DataContracts.Models;
+using MarsKapu.State;
 using Spectre.Console;
 using System;
 using System.Collections.Generic;
@@ -14,14 +16,13 @@ namespace MarsKapu.Controllers
         private readonly IResearchBusinessLogic researchBl;
         protected override Color Color { get; set; } = new Color(111, 22, 219);
         protected override string Title { get; set; } = "Martian Research";
-        public ResearchController(IResearchBusinessLogic researchBl)
+        public ResearchController(IResearchBusinessLogic researchBl, AppState appState) : base(appState)
         {
             this.researchBl = researchBl;
         }
-
-        public void ShowResearchList(string name = "")
+        public void ShowResearchList()
         {
-            AppHeader(name);
+            AppHeader();
             var table = new Table();
 
             // Add some columns
@@ -68,12 +69,12 @@ namespace MarsKapu.Controllers
                 return;
             }
             
-            ShowResearch(researches.Where(p => p.Id == researchName).First(), name);
+            ShowResearch(researches.Where(p => p.Id == researchName).First());
         }
 
-        public void ShowResearch(Research research, string name = "")
+        public void ShowResearch(Research research)
         {
-            AppHeader(name);
+            AppHeader();
             var table = new Table();
             table.Title = new TableTitle("Research");
             // Add some columns
@@ -83,7 +84,23 @@ namespace MarsKapu.Controllers
             table.Width(600);
             table.Border(TableBorder.Rounded);
             AnsiConsole.Write(table);
+            Console.ReadLine();
         }
 
+        public override MenuChoice ShowMenu()
+        {
+            AppHeader();
+            Dictionary<string, Func<MenuChoice>> menuPoints = new Dictionary<string, Func<MenuChoice>>();
+            menuPoints.Add("Show Researches", () => { ShowResearchList(); return MenuChoice.RESEARCH; });
+            menuPoints.Add("Back to main app", () => MenuChoice.APPLICATION);
+            menuPoints.Add("Logout", () => LogOut());
+            menuPoints.Add("Exit", () => { appState.Running = false; return MenuChoice.EXIT; });
+
+            var menuPoint = AnsiConsole.Prompt(
+                new SelectionPrompt<string>()
+                .AddChoices(menuPoints.Keys.ToArray())
+                );
+            return menuPoints[menuPoint].Invoke();
+        }
     }
 }

@@ -9,15 +9,15 @@ using System.Threading.Tasks;
 
 namespace MarsKapu.Controllers
 {
-    public class LifeSupportController : BaseController
+    public class SupplyController : BaseController
     {
-        public LifeSupportController(AppState appState) : base(appState)
+
+        protected override Color Color { get; set; } = new Color(52, 219, 235);
+        protected override string Title { get; set; } = "Martian Supply Control";
+
+        public SupplyController(AppState appState) : base(appState)
         {
         }
-
-        protected override Color Color { get; set; } = new Color(52, 235, 122);
-        protected override string Title { get; set; } = "Martian System Control";
-
         public override MenuChoice ShowMenu()
         {
             AppHeader();
