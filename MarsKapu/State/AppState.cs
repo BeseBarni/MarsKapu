@@ -17,6 +17,8 @@ namespace MarsKapu.State
         public bool Running { get; set; }
         public User? CurrentUser { get; set; }
 
+        public string MessageOfTheDay { get; set; }
+
         public AppState()
         {
             Running = true;

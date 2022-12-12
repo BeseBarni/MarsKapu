@@ -58,7 +58,7 @@ namespace MarsKapu.Repositories
             List<String> proverbs = new List<string>();
             using (StreamReader r = new StreamReader("Repositories/DataBase/Wisdom.txt"))
             {
-                while (r.EndOfStream)
+                while (!r.EndOfStream)
                 {
                     string line = r.ReadLine();
                     proverbs.Add(line);

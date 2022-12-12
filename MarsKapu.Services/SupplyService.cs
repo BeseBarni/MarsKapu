@@ -15,6 +15,10 @@ namespace MarsKapu.Services
         {
             List<Supply> supplies = GetSupplyInventory();
             int index = 0;
+            if (supplies.Count > 0)
+                supply.Id = supplies.Max(p => p.Id) + 1;
+            else
+                supply.Id = 0;
             while (index < supplies.Count && supplies[index].Id != supply.Id)
             {
                 index++;

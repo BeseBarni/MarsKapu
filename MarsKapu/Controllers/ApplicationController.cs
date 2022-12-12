@@ -7,6 +7,7 @@ using Spectre.Console.Advanced;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -51,7 +52,8 @@ namespace MarsKapu.Controllers
                 });
 
             var r = new Random();
-            appState.CurrentUser = new User() { Name = name, Id = 21313, UserAuth = (Authority)r.Next(0,4)};
+            appState.CurrentUser = new User(21313,name,(Authority)r.Next(0,4));
+            appState.MessageOfTheDay = appBL.GetMessageOfTheDay();
 
         }
 
@@ -65,6 +67,7 @@ namespace MarsKapu.Controllers
             {
                 var table = new Table();
                 // Add some columns
+                table.Title(news.PublishDate.ToString("yyyy.MM.dd"));
                 table.AddColumn(news.Title);
                 table.AddRow(news.Text);
                 
@@ -74,6 +77,38 @@ namespace MarsKapu.Controllers
 
             }
             Console.ReadLine();
+        }
+
+        public void AddNews(bool isTechnician = false)
+        {
+
+            AppHeader();
+            var rule = new Rule("Title");
+            AnsiConsole.Write(rule);
+            var title = AnsiConsole.Ask<string>("Please enter the title: ");
+
+            rule = new Rule("Text");
+            AnsiConsole.Write(rule);
+            var text = AnsiConsole.Ask<string>("");
+
+            News news = new News(0, title, text, isTechnician, DateTime.Now);
+            if (!AnsiConsole.Confirm("Do you really want to save it?"))
+            {
+                return;
+            }
+            try
+            {
+                appBL.AddNews(news);
+
+            }
+            catch (Exception e)
+            {
+
+                MessageBox((IntPtr)0, e.Message, "Error", 0);
+                return;
+            }
+            MessageBox((IntPtr)0, "News successfully saved", "Success", 0);
+
         }
 
 
@@ -117,7 +152,7 @@ namespace MarsKapu.Controllers
                 calendar.HighlightStyle(Style.Parse("orangered1 bold"));
                 calendar.RightAligned();
 
-                var panel = new Panel("Leave no stone unturned");
+                var panel = new Panel(appState.MessageOfTheDay);
                 panel.Header = new PanelHeader("Message of the day");
                 panel.Border = BoxBorder.Rounded;
                 var padder = new Padder(panel.PadBottom(2).PadTop(2));
@@ -133,19 +168,28 @@ namespace MarsKapu.Controllers
 
                 if (appState.CurrentUser.UserAuth == Authority.COLONY_LEADER)
                 {
+                    menuPoints.Add("Add News", () => { AddNews(true); return MenuChoice.APPLICATION; });
                     menuPoints.Add("Supply Management", () => MenuChoice.SUPPLY);
                     menuPoints.Add("Research", () => MenuChoice.RESEARCH);
                     menuPoints.Add("Life Support", () => MenuChoice.LIFE_SUPPORT);
                 }
 
                 if (appState.CurrentUser.UserAuth == Authority.SUPPLYCHAIN_MANAGER)
+                {
+                    menuPoints.Add("Add News", () => { AddNews(); return MenuChoice.APPLICATION; });
                     menuPoints.Add("Supply Management", () => MenuChoice.SUPPLY);
+                }
 
                 if (appState.CurrentUser.UserAuth == Authority.RESEARCHER)
+                { 
+                    menuPoints.Add("Add News", () => { AddNews(); return MenuChoice.APPLICATION; });
                     menuPoints.Add("Research", () => MenuChoice.RESEARCH);
+                }
 
-                if (appState.CurrentUser.UserAuth == Authority.TECHNICIAN)
+                if (appState.CurrentUser.UserAuth == Authority.TECHNICIAN) {
+                    menuPoints.Add("Add News", () => { AddNews(true); return MenuChoice.APPLICATION; });
                     menuPoints.Add("Life Support", () =>MenuChoice.LIFE_SUPPORT);
+                }
 
                 menuPoints.Add("Logout", () => LogOut());
                 menuPoints.Add("Exit", () => { appState.Running = false; return MenuChoice.EXIT; });
@@ -158,5 +202,10 @@ namespace MarsKapu.Controllers
             
             }
         }
-    }
+
+
+    [DllImport("User32.dll", CharSet = CharSet.Unicode)]
+    public static extern int MessageBox(IntPtr h, string m, string c, int type);
+
+}
 }

@@ -11,9 +11,9 @@ namespace MarsKapu.Application.Contracts.BusinessLogic
     public interface IAdministrationBusinessLogic
     {   
         public void ApproveNews(News news);
-        public bool AddUser(User user);
+        public void AddUser(User user, string password);
         public List<User> GetUsers();
-        public bool ChangeUser(User user);
+        public void ChangeUser(User user, string password);
         public List<News> GetUnapprovedNews();
        
     }

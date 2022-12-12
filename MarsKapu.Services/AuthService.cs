@@ -20,8 +20,14 @@ namespace MarsKapu.Services
 
         public void AddUser(User user, string password)
         {
+            
             if (!AuthenticateUser(user))
             {
+                var users = GetUsers();
+                if(users.Count > 0)
+                    user.Id = users.Max(p => p.Id) + 1 ;
+                else
+                    user.Id = 0 ;
                 StreamWriter output = new StreamWriter("Repositories/DataBase/Users.txt");
                 output.WriteLine(user.ToString() + ";" + Hash(password));
                 output.Close();
@@ -32,7 +38,7 @@ namespace MarsKapu.Services
         public bool AuthenticateUser(User user)
         {
             List<User> users = GetUsers();
-            return users.Contains(user);
+            return users.Select(p => p.Name).Contains(user.Name);
         }
 
         public void ChangeUser(User user, string password)

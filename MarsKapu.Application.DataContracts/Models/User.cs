@@ -22,29 +22,7 @@ namespace MarsKapu.DataContracts.Models
 
         public override string ToString()
         {
-            int authcode = 0;
-            switch (UserAuth)
-            {
-                case Authority.COLONY_LEADER:
-                    authcode = 1;
-                    break;
-                case Authority.TECHNICIAN:
-                    authcode = 2;
-                    break;
-                case Authority.RESEARCHER:
-                    authcode = 3;
-                    break;
-                case Authority.SUPPLYCHAIN_MANAGER:
-                    authcode = 4;
-                    break;
-                case Authority.CITIZEN:
-                    authcode = 5;
-                    break;
-                case Authority.DENIED:
-                    authcode = 6;
-                    break;
-            }
-            return Id + ";" + Name + ";" + authcode;
+            return Id + ";" + Name + ";" + (int)UserAuth;
         }
     }
 }

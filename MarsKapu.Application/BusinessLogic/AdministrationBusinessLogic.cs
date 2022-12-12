@@ -1,5 +1,6 @@
 ﻿using MarsKapu.Application.Contracts.BusinessLogic;
 using MarsKapu.Application.Contracts.Repositories;
+using MarsKapu.Application.Contracts.Services;
 using MarsKapu.DataContracts.Models;
 using System;
 using System.Collections.Generic;
@@ -12,14 +13,16 @@ namespace MarsKapu.Application.BusinessLogic
     public class AdministrationBusinessLogic : IAdministrationBusinessLogic
     {
         private readonly INewsDataRepository newsRepository;
+        private readonly IAuthService authService;
 
-        public AdministrationBusinessLogic(INewsDataRepository newsRepository)
+        public AdministrationBusinessLogic(INewsDataRepository newsRepository, IAuthService authService)
         {
             this.newsRepository = newsRepository;
+            this.authService = authService;
         }
-        public bool AddUser(User user)
+        public void AddUser(User user, string password)
         {
-            throw new NotImplementedException();
+            authService.AddUser(user, password);
         }
 
         public void ApproveNews(News news)
@@ -27,19 +30,19 @@ namespace MarsKapu.Application.BusinessLogic
             newsRepository.UpdateNews(news);
         }
 
-        public bool ChangeUser(User user)
+        public void ChangeUser(User user, string password)
         {
-            throw new NotImplementedException();
+            authService.ChangeUser(user, password);
         }
 
         public List<News> GetUnapprovedNews()
         {
-            throw new NotImplementedException();
+            return newsRepository.GetUnapprovedNews();
         }
 
         public List<User> GetUsers()
         {
-            throw new NotImplementedException();
+            return authService.GetUsers();
         }
 
     }
