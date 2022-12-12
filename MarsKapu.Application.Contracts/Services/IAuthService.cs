@@ -10,10 +10,10 @@ namespace MarsKapu.Application.Contracts.Services
 {
     public interface IAuthService
     {
-        public void AddUser(User user);
+        public void AddUser(User user, string password);
         public List<User> GetUsers();
-        public void ChangeUser(User user);
+        public void ChangeUser(User user, string password);
         public bool AuthenticateUser(User user);
-        //public Authority AuthorizeUser(User user);
+        public bool AuthorizeUser(User user, string password);
     }
 }
