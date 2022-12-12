@@ -23,5 +23,10 @@ namespace MarsKapu.DataContracts.Models
             Approved = approved;
             PublishDate = publishDate;
         }
+
+        public override string ToString()
+        {
+            return String.Format("{0};{1};{2};{3};{4}", Id, Title, Text, Approved, PublishDate.ToString("yyyy/MM/DD"));
+        }
     }
 }

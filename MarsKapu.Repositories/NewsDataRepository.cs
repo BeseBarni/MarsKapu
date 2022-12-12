@@ -12,7 +12,14 @@ namespace MarsKapu.Repositories
     {
         public void AddNews(News news)
         {
-            throw new NotImplementedException();
+            if (GetAllNews().Where(p => p.Title == news.Title).Count() == 1)
+            {
+                throw new Exception("Ilyen hír már létezik");
+            }
+            using (StreamWriter w = new StreamWriter("Repositories/DataBase/News.txt", append : true))
+            {
+                w.WriteLine(news);
+            }
         }
 
         public List<News> GetAllNews()
@@ -49,7 +56,7 @@ namespace MarsKapu.Repositories
 
         public List<News> GetUnapprovedNews()
         {
-            throw new NotImplementedException();
+            return GetAllNews().Where(p => p.Approved == false).ToList();
         }
 
         public void UpdateNews(News news)

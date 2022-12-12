@@ -11,7 +11,7 @@ namespace MarsKapu.Application.Contracts.BusinessLogic
     public interface IApplicationBusinessLogic
     {
         public List<News> GetCurrentNews();
-        public bool AddNews(News news);
+        public void AddNews(News news);
         public string GetMessageOfTheDay();
         public bool AuthenticateUser(User user);
         //public Authority AuthorizeUser(User user);
