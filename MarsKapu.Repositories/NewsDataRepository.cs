@@ -15,9 +15,31 @@ namespace MarsKapu.Repositories
             throw new NotImplementedException();
         }
 
+        public List<News> GetAllNews()
+        {
+            List<News> news = new List<News>();
+            using (StreamReader r = new StreamReader("Repositories/DataBase/News.txt"))
+            {
+                while (r.EndOfStream == false)
+                {
+                    string line = r.ReadLine();
+                    var data = line.Split(";");
+                    int id = int.Parse(data[0]);  
+                    string title = data[1];
+                    string content = data[2];
+                    bool approved = data[3] == "0" ? true : false;
+                    DateTime published = DateTime.Parse(data[4]);
+
+                    news.Add(new News(id, title, content, approved, published));
+                }
+
+            }
+            return news;
+        }
+
         public List<News> GetCurrentNews()
         {
-            return new List<News> { new News() { Title = "Test", Text = "Test Text" } };
+            return GetAllNews().Where(p => p.Approved == true).ToList();
         }
         
         //Id;Title;Text;Approved;Date

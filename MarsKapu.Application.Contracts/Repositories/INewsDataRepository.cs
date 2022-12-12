@@ -10,6 +10,7 @@ namespace MarsKapu.Application.Contracts.Repositories
 {
     public interface INewsDataRepository
     {
+        public List<News> GetAllNews();
         public List<News> GetCurrentNews();
         public List<News> GetUnapprovedNews();
         public void AddNews(News news);
