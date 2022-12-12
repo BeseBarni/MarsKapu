@@ -19,9 +19,9 @@ namespace MarsKapu.Application.BusinessLogic
             this.newsRepo = newsRepo;
         }
 
-        public bool AddNews(News news)
+        public void AddNews(News news)
         {
-            throw new NotImplementedException();
+            newsRepo.AddNews(news);
         }
 
         public bool AuthenticateUser(User user)
