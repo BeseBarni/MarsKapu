@@ -59,14 +59,20 @@ namespace MarsKapu.Controllers
         {
             AppHeader();
 
-            var news = appBL.GetCurrentNews();
+            var newsList = appBL.GetCurrentNews();
 
-            var table = new Table();
-            table.Title = new TableTitle("Research");
-            // Add some columns
-            table.Width(600);
-            table.Border(TableBorder.Rounded);
-            AnsiConsole.Write(table);
+            foreach (var news in newsList)
+            {
+                var table = new Table();
+                // Add some columns
+                table.AddColumn(news.Title);
+                table.AddRow(news.Text);
+                
+                table.Border(TableBorder.Rounded);
+                table.Centered();
+                AnsiConsole.Write(table);
+
+            }
             Console.ReadLine();
         }
 
@@ -123,6 +129,7 @@ namespace MarsKapu.Controllers
                 Dictionary<string, Func<MenuChoice>> menuPoints = new Dictionary<string, Func<MenuChoice>>();
 
                 menuPoints.Add("Our lord and saviour", () => { ShowMusk(); return MenuChoice.APPLICATION; });
+                menuPoints.Add("Current News", () => { ShowNews(); return MenuChoice.APPLICATION; });
 
                 if (appState.CurrentUser.UserAuth == Authority.COLONY_LEADER)
                 {

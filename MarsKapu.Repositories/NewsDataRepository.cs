@@ -48,7 +48,8 @@ namespace MarsKapu.Repositories
         {
             return GetAllNews().Where(p => p.Approved == true).ToList();
         }
-
+        
+        //Id;Title;Text;Approved;Date
         public string GetMessageOfTheDay()
         {
             throw new NotImplementedException();
