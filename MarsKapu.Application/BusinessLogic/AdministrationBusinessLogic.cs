@@ -1,4 +1,5 @@
 ﻿using MarsKapu.Application.Contracts.BusinessLogic;
+using MarsKapu.Application.Contracts.Repositories;
 using MarsKapu.DataContracts.Models;
 using System;
 using System.Collections.Generic;
@@ -10,14 +11,20 @@ namespace MarsKapu.Application.BusinessLogic
 {
     public class AdministrationBusinessLogic : IAdministrationBusinessLogic
     {
+        private readonly INewsDataRepository newsRepository;
+
+        public AdministrationBusinessLogic(INewsDataRepository newsRepository)
+        {
+            this.newsRepository = newsRepository;
+        }
         public bool AddUser(User user)
         {
             throw new NotImplementedException();
         }
 
-        public bool ApproveNews(News news)
+        public void ApproveNews(News news)
         {
-            throw new NotImplementedException();
+            newsRepository.UpdateNews(news);
         }
 
         public bool ChangeUser(User user)
@@ -35,9 +42,5 @@ namespace MarsKapu.Application.BusinessLogic
             throw new NotImplementedException();
         }
 
-        public bool UpdateNews(News news)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

@@ -14,12 +14,13 @@ namespace MarsKapu.Repositories
         {
             if (GetAllNews().Where(p => p.Title == news.Title).Count() == 1)
             {
-                throw new Exception("Ilyen hír már létezik");
+                throw new Exception("Already have this one in the database");
             }
             using (StreamWriter w = new StreamWriter("Repositories/DataBase/News.txt", append : true))
             {
                 w.WriteLine(news);
             }
+
         }
 
         public List<News> GetAllNews()
@@ -52,7 +53,18 @@ namespace MarsKapu.Repositories
         //Id;Title;Text;Approved;Date
         public string GetMessageOfTheDay()
         {
-            throw new NotImplementedException();
+            Random rnd = new Random();
+            int meantToBe = rnd.Next(1, 22);
+            List<String> proverbs = new List<string>();
+            using (StreamReader r = new StreamReader("Repositories/DataBase/Wisdom.txt"))
+            {
+                while (r.EndOfStream)
+                {
+                    string line = r.ReadLine();
+                    proverbs.Add(line);
+                }
+            }
+            return proverbs[meantToBe];
         }
 
         public List<News> GetUnapprovedNews()
@@ -62,7 +74,20 @@ namespace MarsKapu.Repositories
 
         public void UpdateNews(News news)
         {
-            throw new NotImplementedException();
+            List<News> all = GetAllNews();
+            if (GetAllNews().Where(p => p.Title == news.Title).Count() == 0)
+            {
+                throw new Exception("No such news yet in the database");
+            }
+            var itemToRemove = all.Where(p => p.Title == news.Title).First();
+            all.Remove(itemToRemove);
+            all.Add(news);
+            using (StreamWriter w = new StreamWriter("Repositories/DataBase/News.txt", append: false))
+            {
+                foreach (News item in all)
+                    w.WriteLine(item);
+            }
+
         }
     }
 }

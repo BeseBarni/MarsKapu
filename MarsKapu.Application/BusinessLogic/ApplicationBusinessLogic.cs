@@ -36,7 +36,7 @@ namespace MarsKapu.Application.BusinessLogic
 
         public string GetMessageOfTheDay()
         {
-            throw new NotImplementedException();
+            return newsRepo.GetMessageOfTheDay();
         }
     }
 }

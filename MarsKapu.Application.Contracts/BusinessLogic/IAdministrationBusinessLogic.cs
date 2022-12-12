@@ -10,11 +10,11 @@ namespace MarsKapu.Application.Contracts.BusinessLogic
 {
     public interface IAdministrationBusinessLogic
     {   
-        public bool ApproveNews(News news);
+        public void ApproveNews(News news);
         public bool AddUser(User user);
         public List<User> GetUsers();
         public bool ChangeUser(User user);
         public List<News> GetUnapprovedNews();
-        public bool UpdateNews(News news);  
+       
     }
 }
