@@ -12,7 +12,6 @@ namespace MarsKapu.DataContracts.Enums
         TECHNICIAN,
         RESEARCHER,
         SUPPLYCHAIN_MANAGER,
-        CITIZEN,
-        DENIED
+        CITIZEN
     }
 }

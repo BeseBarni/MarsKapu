@@ -92,9 +92,6 @@ namespace MarsKapu.Services
                         case 5:
                             auth = Authority.CITIZEN;
                             break;
-                        case 6:
-                            auth = Authority.DENIED;
-                            break;
                     }
                     users.Add(new User(id, name, auth));
                 }
