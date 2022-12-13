@@ -13,8 +13,12 @@ namespace MarsKapu.Application.BusinessLogic
         public void AddSupply(Supply supply)
         {
             List<Supply> supplies = GetSupplyInventory();
+            if (supplies.Count > 0)
+                supply.Id = supplies.Max(p => p.Id) + 1;
+            else
+                supply.Id = 0;
             int index = 0;
-            while (index < supplies.Count && supplies[index].Id != supply.Id)
+            while (index < supplies.Count && supplies[index].Name != supply.Name)
             {
                 index++;
             }

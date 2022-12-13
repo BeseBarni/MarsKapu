@@ -1,3 +1,4 @@
 ﻿1;ez;helobelo;2020/10/01
 2;az;csov;2019/06/17
 3;meginmasik;keksz;2022/02/02
+4;Adam;<3;2022/12/13
