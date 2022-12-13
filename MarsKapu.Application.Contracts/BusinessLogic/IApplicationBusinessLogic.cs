@@ -14,6 +14,7 @@ namespace MarsKapu.Application.Contracts.BusinessLogic
         public void AddNews(News news);
         public string GetMessageOfTheDay();
         public bool AuthenticateUser(User user);
+        User? AuthorizeUser(User user, string password);
         //public Authority AuthorizeUser(User user);
     }
 }

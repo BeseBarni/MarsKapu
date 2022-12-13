@@ -1,5 +1,6 @@
 ﻿using MarsKapu.Application.Contracts.BusinessLogic;
 using MarsKapu.Application.Contracts.Repositories;
+using MarsKapu.Application.Contracts.Services;
 using MarsKapu.DataContracts.Models;
 using System;
 using System.Collections.Generic;
@@ -12,11 +13,12 @@ namespace MarsKapu.Application.BusinessLogic
     public class ApplicationBusinessLogic : IApplicationBusinessLogic
     {
         private readonly INewsDataRepository newsRepo;
+        private readonly IAuthService authService;
 
-        
-        public ApplicationBusinessLogic(INewsDataRepository newsRepo)
+        public ApplicationBusinessLogic(INewsDataRepository newsRepo, IAuthService authService)
         {
             this.newsRepo = newsRepo;
+            this.authService = authService;
         }
 
         public void AddNews(News news)
@@ -26,7 +28,12 @@ namespace MarsKapu.Application.BusinessLogic
 
         public bool AuthenticateUser(User user)
         {
-            throw new NotImplementedException();
+            return authService.AuthenticateUser(user);
+        }
+
+        public User? AuthorizeUser(User user, string password)
+        {
+            return authService.AuthorizeUser(user, password);
         }
 
         public List<News> GetCurrentNews()

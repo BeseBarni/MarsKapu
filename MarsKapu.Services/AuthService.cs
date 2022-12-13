@@ -15,7 +15,7 @@ namespace MarsKapu.Services
         static string Hash(string input)
         {
             using var sha1 = SHA1.Create();
-            return Convert.ToHexString(sha1.ComputeHash(Encoding.UTF8.GetBytes(input)));
+            return Convert.ToHexString(sha1.ComputeHash(Encoding.UTF8.GetBytes(input))).ToLower();
         }
 
         public void AddUser(User user, string password)
@@ -66,7 +66,7 @@ namespace MarsKapu.Services
         public List<User> GetUsers()
         {
             List<User> users = new List<User>();
-            using (StreamReader r = new StreamReader("Repositories/DataBase/Supplies.txt"))
+            using (StreamReader r = new StreamReader("Repositories/DataBase/Users.txt"))
             {
                 while (r.EndOfStream == false)
                 {
@@ -101,7 +101,7 @@ namespace MarsKapu.Services
             }
             return users;
         }
-        public bool AuthorizeUser(User user, string password)
+        public User? AuthorizeUser(User user, string password)
         {
             List<User> users = GetUsers();
             List<string> passwords = new List<string>();
@@ -116,12 +116,15 @@ namespace MarsKapu.Services
             }
             for (int i = 0; i < users.Count; i++)
             {
-                if (users[i].Id == user.Id)
+                if (users[i].Name == user.Name)
                 {
-                    return passwords[i] == Hash(password);
+                    if (passwords[i] == Hash(password))
+                    {
+                        return users[i];
+                    }
                 }
             }
-            return false;
+            return null;
         }
     }
 }

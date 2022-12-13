@@ -31,6 +31,9 @@ namespace MarsKapu.Utilities
                 case MenuChoice.APPLICATION:
                     CurrentController = serviceProvider.GetService<ApplicationController>();
                     break;
+                case MenuChoice.ADMINISTRATION:
+                    CurrentController = serviceProvider.GetService<AdministrationController>();
+                    break;
                 case MenuChoice.RESEARCH:
                     CurrentController = serviceProvider.GetService<ResearchController>();
                     break;

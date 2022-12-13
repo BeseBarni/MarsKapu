@@ -14,6 +14,6 @@ namespace MarsKapu.Application.Contracts.Services
         public List<User> GetUsers();
         public void ChangeUser(User user, string password);
         public bool AuthenticateUser(User user);
-        public bool AuthorizeUser(User user, string password);
+        public User? AuthorizeUser(User user, string password);
     }
 }

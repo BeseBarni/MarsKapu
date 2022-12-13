@@ -35,25 +35,39 @@ namespace MarsKapu.Controllers
                     .Secret()
                     );
             AnsiConsole.WriteLine();
+            User? currentUser = null;
             AnsiConsole.Status()
                 .Start("[orangered1]Running ID check[/]", ctx =>
                 {
-                    // Simulate some work
-                    ctx.Spinner(Spinner.Known.BouncingBar);
-                    AnsiConsole.MarkupLine("[gray]LOG: [/] Searching in Martian database");
+                // Simulate some work
+                ctx.Spinner(Spinner.Known.BouncingBar);
+                AnsiConsole.MarkupLine("[gray]LOG: [/] Searching in Martian database");
+                Thread.Sleep(900);
+                if (appBL.AuthenticateUser(new User(0, name, 0)))
+                    AnsiConsole.MarkupLine(String.Format("[gray]LOG: [/] {0} [green]online[/]", name));
+                else
+                {
+                    AnsiConsole.MarkupLine(String.Format("[gray]LOG: [/] {0} [red]offline[/]", name));
                     Thread.Sleep(900);
-                    AnsiConsole.MarkupLine(String.Format("[gray]LOG: [/] {0} [green]online[/]",name));
-                    Thread.Sleep(900);
-                    ctx.Status("Checking priviliges");
-                    ctx.Spinner(Spinner.Known.SimpleDots);
-
-                    AnsiConsole.MarkupLine("[gray]LOG: [/] Privilige found");
+                    return;
+                }
+                ctx.Status("Checking priviliges");
+                Thread.Sleep(900);
+                ctx.Spinner(Spinner.Known.SimpleDots);
+                currentUser = appBL.AuthorizeUser(new User(0, name, 0), password);
+                if(currentUser != null)
+                    AnsiConsole.MarkupLine("[gray]LOG: [/] Privilige found: [orangered1]" + currentUser.UserAuth + "[/]");
+                else
+                {
+                    AnsiConsole.MarkupLine("[gray]LOG: [/]Password is incorrect");
+                }
+                    ctx.Status("Finalizing");
                     Thread.Sleep(1300);                   
-                });
-
-            var r = new Random();
-            appState.CurrentUser = new User(21313,name,(Authority)r.Next(0,4));
+                });            
+            
+            
             appState.MessageOfTheDay = appBL.GetMessageOfTheDay();
+            appState.CurrentUser = currentUser;
 
         }
 
@@ -99,7 +113,6 @@ namespace MarsKapu.Controllers
             try
             {
                 appBL.AddNews(news);
-
             }
             catch (Exception e)
             {
@@ -169,6 +182,7 @@ namespace MarsKapu.Controllers
                 if (appState.CurrentUser.UserAuth == Authority.COLONY_LEADER)
                 {
                     menuPoints.Add("Add News", () => { AddNews(true); return MenuChoice.APPLICATION; });
+                    menuPoints.Add("Administration", () => MenuChoice.ADMINISTRATION);
                     menuPoints.Add("Supply Management", () => MenuChoice.SUPPLY);
                     menuPoints.Add("Research", () => MenuChoice.RESEARCH);
                     menuPoints.Add("Life Support", () => MenuChoice.LIFE_SUPPORT);

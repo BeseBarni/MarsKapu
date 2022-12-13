@@ -47,6 +47,8 @@ static IHostBuilder CreateHostBuilder(string[] args)
             services.AddSingleton<ResearchController>();
             services.AddSingleton<LifeSupportController>();
             services.AddSingleton<SupplyController>();
+            services.AddSingleton<AdministrationController>();
+
 
             services.AddSingleton<AppState>();
             services.AddSingleton<ControllerProvider>();
