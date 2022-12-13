@@ -170,7 +170,7 @@ namespace MarsKapu.Controllers
                 panel.Border = BoxBorder.Rounded;
                 var padder = new Padder(panel.PadBottom(2).PadTop(2));
                 AnsiConsole.Write(new Columns(
-                    table, padder,calendar
+                     padder,calendar
                     ));
 
 
