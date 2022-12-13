@@ -28,7 +28,7 @@ namespace MarsKapu.Services
                     user.Id = users.Max(p => p.Id) + 1 ;
                 else
                     user.Id = 0 ;
-                StreamWriter output = new StreamWriter("Repositories/DataBase/Users.txt");
+                StreamWriter output = new StreamWriter("Repositories/DataBase/Users.txt", true);
                 output.WriteLine(user.ToString() + ";" + Hash(password));
                 output.Close();
             }
