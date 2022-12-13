@@ -12,6 +12,11 @@ namespace MarsKapu.Application.BusinessLogic
     public class ResearchBusinessLogic : IResearchBusinessLogic
     {
         private readonly IResearchDataRepository reserachRepo;
+
+        public ResearchBusinessLogic(IResearchDataRepository reserachRepo)
+        {
+            this.reserachRepo = reserachRepo;
+        }
         public void AddResearch(Research research)
         {
            reserachRepo.AddResearch(research);
