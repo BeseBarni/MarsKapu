@@ -20,6 +20,10 @@ namespace MarsKapu.DataContracts.Models
             Text = text;
             PublishDate = publishDate;
         }
+        public Research()
+        {
+
+        }
 
         public override string ToString()
         {
