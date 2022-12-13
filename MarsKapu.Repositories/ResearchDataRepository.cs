@@ -34,7 +34,7 @@ namespace MarsKapu.Repositories
                     int id = int.Parse(data[0]);
                     string title = data[1];
                     string text= data[2];
-                    DateTime published = DateTime.Parse(data[4]);
+                    DateTime published = DateTime.Parse(data[3]);
 
                     researches.Add(new Research(id, title, text, published));
                 }

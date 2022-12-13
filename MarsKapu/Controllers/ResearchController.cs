@@ -23,53 +23,51 @@ namespace MarsKapu.Controllers
         public void ShowResearchList()
         {
             AppHeader();
-            var table = new Table();
+            var researchList = researchBl.GetCurrentResearchList();
 
-            // Add some columns
-            table.AddColumn("Research Archive").Centered();
-            table.Border(TableBorder.Rounded);
-            AnsiConsole.Write(table);
-
-            var researches = new List<Research>()
+            foreach (var research in researchList)
             {
-                new Research()
-                { Id = 25424,
-                  Title = "Like symbol",
-                  Text = "This research is conducted on the effectiveness of passive agression induced by the 👍 symbol\n" +
-                  "Prime users of the aforementioned symbol are part of the Homo Intelligentus species, known for their remarkable intelligent quotient.\n" +
-                  "The primrary test subject,L234-G-H, has been observed to exhibit extreme signs of sarcasm and stubbornness",
-                  PublishDate = DateTime.Now,
-                },
-                new Research()
-                {
-                    Id = 45543,
-                    Title = "Battle of the wits",
-                    Text = "I myself conclude that to compose thy this letter, is to require an exquisite level of mind-state, for which I have long saught after, alas, all in vain, thus, thou shalt not receive.",
-                    PublishDate= DateTime.Now,
-                }
-            };
-            var columns = new List<Panel>();
-            foreach (var research in researches)
-            {
-
-                var researchTable = new Panel(research.Title);
-
+                var table = new Table();
                 // Add some columns
-                researchTable.Header = new PanelHeader(research.Id.ToString());
-                researchTable.Border = BoxBorder.Rounded
-                ;
-                columns.Add(researchTable);
+                table.Title(research.PublishDate.ToString("yyyy.MM.dd"));
+                table.AddColumn(research.Title);
+                table.AddRow(research.Text);
+
+                table.Border(TableBorder.Rounded);
+                table.Centered();
+                AnsiConsole.Write(table);
             }
-            AnsiConsole.Write(new Columns(columns));
+            Console.ReadLine(); 
+        }
 
-            var researchName = AnsiConsole.Ask<int>("Enter the selected ID");
+        public void AddResearch()
+        {
 
-            if (researchName == 0)
+            AppHeader();
+            var rule = new Rule("Title");
+            AnsiConsole.Write(rule);
+            var title = AnsiConsole.Ask<string>("Please enter the title: ");
+
+            rule = new Rule("Text");
+            AnsiConsole.Write(rule);
+            var text = AnsiConsole.Ask<string>("");
+
+            Research research = new Research(0, title, text, DateTime.Now);
+            if (!AnsiConsole.Confirm("Do you really want to save it?"))
             {
                 return;
             }
-            
-            ShowResearch(researches.Where(p => p.Id == researchName).First());
+            try
+            {
+                researchBl.AddResearch(research);
+
+            }
+            catch (Exception e)
+            {
+                return;
+            }
+            //MessageBox((IntPtr)0, "News successfully saved", "Success", 0);
+
         }
 
         public void ShowResearch(Research research)
@@ -92,6 +90,7 @@ namespace MarsKapu.Controllers
             AppHeader();
             Dictionary<string, Func<MenuChoice>> menuPoints = new Dictionary<string, Func<MenuChoice>>();
             menuPoints.Add("Show Researches", () => { ShowResearchList(); return MenuChoice.RESEARCH; });
+            menuPoints.Add("Add Research", () => { AddResearch(); return MenuChoice.RESEARCH; });
             menuPoints.Add("Back to main app", () => MenuChoice.APPLICATION);
             menuPoints.Add("Logout", () => LogOut());
             menuPoints.Add("Exit", () => { appState.Running = false; return MenuChoice.EXIT; });
