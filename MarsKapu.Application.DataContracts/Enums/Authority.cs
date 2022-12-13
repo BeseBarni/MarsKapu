@@ -8,10 +8,10 @@ namespace MarsKapu.DataContracts.Enums
 {
     public enum Authority
     {
-        COLONY_LEADER,
-        TECHNICIAN,
-        RESEARCHER,
-        SUPPLYCHAIN_MANAGER,
-        CITIZEN
+        COLONY_LEADER = 1,
+        TECHNICIAN = 2,
+        RESEARCHER = 3,
+        SUPPLYCHAIN_MANAGER = 4,
+        CITIZEN = 5
     }
 }
