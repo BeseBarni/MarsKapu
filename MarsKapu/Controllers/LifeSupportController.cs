@@ -11,9 +11,13 @@ namespace MarsKapu.Controllers
 {
     public class LifeSupportController : BaseController
     {
-        public LifeSupportController(AppState appState) : base(appState)
+        private readonly ILifeSupportBusinessLogic supportBl;
+        public LifeSupportController(ILifeSupportBusinessLogic supportBl, AppState appState) : base(appState)
         {
+            this.supportBl = supportBl;
         }
+
+        
 
         protected override Color Color { get; set; } = new Color(52, 235, 122);
         protected override string Title { get; set; } = "Martian System Control";
@@ -55,6 +59,24 @@ namespace MarsKapu.Controllers
             Dictionary<string, Func<MenuChoice>> menuPoints = new Dictionary<string, Func<MenuChoice>>();
             menuPoints.Add("Atmosphere status", () => { ShowAtmosphereStatus(); return MenuChoice.LIFE_SUPPORT; });
             menuPoints.Add("Soil status", () => { ShowSoilStatus(); return MenuChoice.LIFE_SUPPORT; });
+            if (supportBl.GetOxygenSystemPower())
+            {
+                menuPoints.Add("Oxygen system status: On", () => { ShutdownOxigenSystem(); return MenuChoice.LIFE_SUPPORT; });
+            }
+            else
+            {
+                menuPoints.Add("Oxygen system status: Off", () => { PowerOxigenSystem(); return MenuChoice.LIFE_SUPPORT; });
+
+            }
+            if (supportBl.GetSoilSystemPower())
+            {
+                menuPoints.Add("Soil system status: On", () => { PowerSoilSystem(); return MenuChoice.LIFE_SUPPORT; });
+            }
+            else
+            {
+                menuPoints.Add("Soil system status: Off", () => { PowerSoilSystem(); return MenuChoice.LIFE_SUPPORT; });
+
+            }
             menuPoints.Add("Back to main app", () => MenuChoice.APPLICATION);
             menuPoints.Add("Logout", () => LogOut());
             menuPoints.Add("Exit", () => { appState.Running = false; return MenuChoice.EXIT; });
