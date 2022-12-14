@@ -1,4 +1,5 @@
-﻿using MarsKapu.DataContracts.Enums;
+﻿using MarsKapu.Application.Contracts.BusinessLogic;
+using MarsKapu.DataContracts.Enums;
 using MarsKapu.State;
 using Spectre.Console;
 using System;
@@ -11,8 +12,8 @@ namespace MarsKapu.Controllers
 {
     public class LifeSupportController : BaseController
     {
-        private readonly ILifeSupportBusinessLogic supportBl;
-        public LifeSupportController(ILifeSupportBusinessLogic supportBl, AppState appState) : base(appState)
+        private readonly ILifeSupportSystemBusinessLogic supportBl;
+        public LifeSupportController(ILifeSupportSystemBusinessLogic supportBl, AppState appState) : base(appState)
         {
             this.supportBl = supportBl;
         }
@@ -61,20 +62,20 @@ namespace MarsKapu.Controllers
             menuPoints.Add("Soil status", () => { ShowSoilStatus(); return MenuChoice.LIFE_SUPPORT; });
             if (supportBl.GetOxygenSystemPower())
             {
-                menuPoints.Add("Oxygen system status: On", () => { ShutdownOxigenSystem(); return MenuChoice.LIFE_SUPPORT; });
+                menuPoints.Add("Oxygen system status: On", () => { supportBl.PowerOxigenSystem(); return MenuChoice.LIFE_SUPPORT; });
             }
             else
             {
-                menuPoints.Add("Oxygen system status: Off", () => { PowerOxigenSystem(); return MenuChoice.LIFE_SUPPORT; });
+                menuPoints.Add("Oxygen system status: Off", () => { supportBl.PowerOxigenSystem(); return MenuChoice.LIFE_SUPPORT; });
 
             }
             if (supportBl.GetSoilSystemPower())
             {
-                menuPoints.Add("Soil system status: On", () => { PowerSoilSystem(); return MenuChoice.LIFE_SUPPORT; });
+                menuPoints.Add("Soil system status: On", () => { supportBl.PowerSoilSystem(); return MenuChoice.LIFE_SUPPORT; });
             }
             else
             {
-                menuPoints.Add("Soil system status: Off", () => { PowerSoilSystem(); return MenuChoice.LIFE_SUPPORT; });
+                menuPoints.Add("Soil system status: Off", () => { supportBl.PowerSoilSystem(); return MenuChoice.LIFE_SUPPORT; });
 
             }
             menuPoints.Add("Back to main app", () => MenuChoice.APPLICATION);
