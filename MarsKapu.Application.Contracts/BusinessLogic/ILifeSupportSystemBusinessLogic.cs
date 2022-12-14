@@ -12,10 +12,13 @@ namespace MarsKapu.Application.Contracts.BusinessLogic
     {
         //public SystemStatus GetOxigenSystemStatus();
         //public SystemStatus GetSoilSystemStatus();
-        public bool PowerOxigenSystem();      
-        public bool PowerSoilSystem();
-        public bool ShutdownOxigenSystem();
-        public bool ShutdownSoilSystem();
+        public void PowerOxigenSystem();      
+        public void PowerSoilSystem();
+
+        public Dictionary<string, double> GetAtmoshpereComposition();
+        public Dictionary<string, double> GetSoilComposition();
+        public bool GetOxygenSystemPower();
+        public bool GetSoilSystemPower();
         public bool SwitchBackUpPower();
         public bool ActivateFailSafeSystem(); 
     }

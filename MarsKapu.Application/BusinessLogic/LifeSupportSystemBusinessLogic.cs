@@ -1,4 +1,5 @@
 ﻿using MarsKapu.Application.Contracts.BusinessLogic;
+using MarsKapu.Application.Contracts.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,29 +10,45 @@ namespace MarsKapu.Application.BusinessLogic
 {
     public class LifeSupportSystemBusinessLogic : ILifeSupportSystemBusinessLogic
     {
+        private readonly ILifeSupportSystemService lifeSupportService;
+
+        public LifeSupportSystemBusinessLogic(ILifeSupportSystemService lifeSupportService)
+        {
+            this.lifeSupportService = lifeSupportService;
+        }
         public bool ActivateFailSafeSystem()
         {
             throw new NotImplementedException();
         }
 
-        public bool PowerOxigenSystem()
+        public Dictionary<string, double> GetAtmoshpereComposition()
         {
-            throw new NotImplementedException();
+            return lifeSupportService.GetOxygenComposition();
         }
 
-        public bool PowerSoilSystem()
+        public bool GetOxygenSystemPower()
         {
-            throw new NotImplementedException();
+            return lifeSupportService.OxygenSystemPower;
         }
 
-        public bool ShutdownOxigenSystem()
+        public Dictionary<string, double> GetSoilComposition()
         {
-            throw new NotImplementedException();
+            return lifeSupportService.GetSoilComposition();
         }
 
-        public bool ShutdownSoilSystem()
+        public bool GetSoilSystemPower()
         {
-            throw new NotImplementedException();
+            return lifeSupportService.SoilSystemPower;
+        }
+
+        public void PowerOxigenSystem()
+        {
+            lifeSupportService.PowerOxigenSystem();
+        }
+
+        public void PowerSoilSystem()
+        {
+            lifeSupportService.PowerSoilSystem();
         }
 
         public bool SwitchBackUpPower()
