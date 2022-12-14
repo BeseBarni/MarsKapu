@@ -27,14 +27,23 @@ namespace MarsKapu.Controllers
         {
             AppHeader();
             AnsiConsole.Write(new Rule("Atmosphere Composition"));
-            AnsiConsole.Write(new BreakdownChart()
-                .Width(60)
-                // Add item is in the order of label, value, then color.
-                .AddItem("Oxygen", 22.3, Color.Blue)
-                .AddItem("Nitrogen", 67.3, Color.BlueViolet)
-                .AddItem("Carbon dioxide", 10.3, Color.Green)
-                .AddItem("Argon", 3.1, Color.Purple3));
-
+            BreakdownChart chart = new BreakdownChart().Width(60);
+            
+            var elements = supportBl.GetAtmoshpereComposition();
+            List<Color> colors = new List<Color>();
+            colors.Add(Color.DeepPink4_1);
+            colors.Add(Color.DarkMagenta);
+            colors.Add(Color.DarkViolet);
+            colors.Add(Color.Purple4_1);
+            colors.Add(Color.BlueViolet);
+            colors.Add(Color.RoyalBlue1);
+            int i = 0;
+            foreach (var item in elements)
+            {
+                chart.AddItem(item.Key, item.Value, colors[i]);
+                i++;
+            }
+            AnsiConsole.Write(chart);
             Console.ReadLine();
         }
 
@@ -42,16 +51,26 @@ namespace MarsKapu.Controllers
         {
             AppHeader();
             AnsiConsole.Write(new Rule("Soil Composition"));
-            AnsiConsole.Write(new BreakdownChart()
-                .Width(60)
-                // Add item is in the order of label, value, then color.
-                .AddItem("Carbon", 22.3, Color.DarkSlateGray1)
-                .AddItem("Hydrogen", 15, Color.Red3)
-                .AddItem("Oxygen", 10.4, Color.Blue3_1)
-                .AddItem("Nitrogen", 32.4, Color.Green1)
-                .AddItem("Phosphorus", 6.7, Color.OrangeRed1)
-                .AddItem("Molybdenum", 2.3, Color.Purple_2));
-
+            BreakdownChart chart = new BreakdownChart().Width(60);
+            
+            var elements = supportBl.GetSoilComposition();
+            List<Color> colors = new List<Color>();
+            colors.Add(Color.DarkGreen);
+            colors.Add(Color.DeepSkyBlue4_1);
+            colors.Add(Color.Green4);
+            colors.Add(Color.Green3);
+            colors.Add(Color.DarkCyan);
+            colors.Add(Color.LightCoral);
+            colors.Add(Color.SpringGreen2);
+            colors.Add(Color.Chartreuse4);
+            colors.Add(Color.DarkOrange3);
+            int i = 0;
+            foreach (var item in elements)
+            {
+                chart.AddItem(item.Key, item.Value, colors[i]);
+                i++;
+            }
+            AnsiConsole.Write(chart);
             Console.ReadLine();
         }
         public override MenuChoice ShowMenu()

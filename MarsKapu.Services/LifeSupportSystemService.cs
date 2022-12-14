@@ -56,7 +56,7 @@ namespace MarsKapu.Services
                 composition.Add("Hydrogen", r.Next(80, 130) / 10.0);
             composition.Add("Nitrogen", r.Next(320, 410) / 10.0);
             composition.Add("Phosphorus", r.Next(60, 105) / 10.0);
-            composition.Add("Molybdenum", r.Next(20, 15) / 10.0);
+            composition.Add("Molybdenum", r.Next(15, 20) / 10.0);
 
             return composition;
         }
