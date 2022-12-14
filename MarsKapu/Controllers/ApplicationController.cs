@@ -112,15 +112,36 @@ namespace MarsKapu.Controllers
             }
             try
             {
+                Console.WriteLine();
+                AnsiConsole.Status()
+               .Start("[orangered1]Connecting to Database[/]", ctx =>
+               {
+                   // Simulate some work
+                   ctx.Spinner(Spinner.Known.BouncingBar);
+                   AnsiConsole.MarkupLine("[gray]LOG: [/] Establishin connection with Database");
+                   Thread.Sleep(900);
+                   AnsiConsole.MarkupLine("[gray]LOG: [/] Communication [green]ONLINE[/]");
+                   Thread.Sleep(900);
+                   ctx.Status("Saving News");
+                   Thread.Sleep(900);
+                   ctx.Spinner(Spinner.Known.SimpleDots);
+
+                   ctx.Status("Finalizing");
+                   Thread.Sleep(1300);
+               });
                 appBL.AddNews(news);
             }
             catch (Exception e)
             {
 
-                MessageBox((IntPtr)0, e.Message, "Error", 0);
+                Console.WriteLine();
+                AnsiConsole.Write(new Markup("[gray]LOG: [/][red]" + e.Message + "[/]"));
+                Console.ReadLine();
                 return;
             }
-            MessageBox((IntPtr)0, "News successfully saved", "Success", 0);
+            Console.WriteLine();
+            AnsiConsole.Write(new Markup("[gray]LOG: [/][green]News successfuly saved[/]"));
+            Console.ReadLine();
 
         }
 
@@ -176,7 +197,6 @@ namespace MarsKapu.Controllers
 
                 Dictionary<string, Func<MenuChoice>> menuPoints = new Dictionary<string, Func<MenuChoice>>();
 
-                menuPoints.Add("Our lord and saviour", () => { ShowMusk(); return MenuChoice.APPLICATION; });
                 menuPoints.Add("Current News", () => { ShowNews(); return MenuChoice.APPLICATION; });
 
                 if (appState.CurrentUser.UserAuth == Authority.COLONY_LEADER)

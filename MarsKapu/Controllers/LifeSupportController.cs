@@ -31,12 +31,12 @@ namespace MarsKapu.Controllers
             
             var elements = supportBl.GetAtmoshpereComposition();
             List<Color> colors = new List<Color>();
+            colors.Add(Color.DarkTurquoise);
             colors.Add(Color.DeepPink4_1);
-            colors.Add(Color.DarkMagenta);
-            colors.Add(Color.DarkViolet);
+            colors.Add(Color.DodgerBlue1);
+            colors.Add(Color.RoyalBlue1);
             colors.Add(Color.Purple4_1);
             colors.Add(Color.BlueViolet);
-            colors.Add(Color.RoyalBlue1);
             int i = 0;
             foreach (var item in elements)
             {

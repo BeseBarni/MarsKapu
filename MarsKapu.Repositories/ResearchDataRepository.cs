@@ -12,12 +12,17 @@ namespace MarsKapu.Repositories
     {
         public void AddResearch(Research research)
         {
-            if (GetCurrentResearchList().Where(p => p.Title == research.Title).Count() == 1)
+            var researches = GetCurrentResearchList();
+            if (researches.Where(p => p.Title == research.Title).Count() == 1)
             {
                 throw new Exception("Already have this one in the database");
             }
             using (StreamWriter w = new StreamWriter("Repositories/DataBase/Research.txt", append: true))
             {
+                if (researches.Count > 0)
+                    research.Id = researches.Max(p => p.Id) + 1;
+                else
+                    research.Id = 0;
                 w.WriteLine(research);
             }
         }

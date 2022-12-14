@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace MarsKapu.Controllers
 {
@@ -59,15 +60,38 @@ namespace MarsKapu.Controllers
             }
             try
             {
+                Console.WriteLine();
+                AnsiConsole.Status()
+               .Start("[orangered1]Connecting[/]", ctx =>
+               {
+                   // Simulate some work
+                   ctx.Spinner(Spinner.Known.BouncingBar);
+                   AnsiConsole.MarkupLine("[gray]LOG: [/] Establishing contact with Earth");
+                   Thread.Sleep(900);
+                   AnsiConsole.MarkupLine("[gray]LOG: [/] Communication [green]ONLINE[/]");
+                   Thread.Sleep(900);
+                   ctx.Status("Saving Research");
+                   Thread.Sleep(900);
+                   ctx.Spinner(Spinner.Known.SimpleDots);
+                 
+                   ctx.Status("Finalizing");
+                   Thread.Sleep(1300);
+               });
                 researchBl.AddResearch(research);
 
             }
             catch (Exception e)
             {
+                Console.WriteLine();
+                AnsiConsole.Write(new Markup("[gray]LOG: [/][red]" + e.Message + "[/]"));
+                Console.ReadLine();
                 return;
             }
-            //MessageBox((IntPtr)0, "News successfully saved", "Success", 0);
 
+            //MessageBox((IntPtr)0, "News successfully saved", "Success", 0);
+            Console.WriteLine();
+            AnsiConsole.Write(new Markup("[gray]LOG: [/][green]Research successfuly saved[/]"));
+                Console.ReadLine();
         }
 
         public void ShowResearch(Research research)

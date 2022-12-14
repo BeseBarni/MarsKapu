@@ -78,6 +78,12 @@ namespace MarsKapu.Controllers
         {
             AppHeader();
             var news = adminBl.GetUnapprovedNews();
+            if(news.Count() == 0)
+            {
+                AnsiConsole.Write(new Markup("[gray]LOG:  There are no news to be approved[/]"));
+                Console.ReadLine();
+                return;
+            }
             var title = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
                 .AddChoices(news.Select(p => p.Title))
@@ -103,6 +109,7 @@ namespace MarsKapu.Controllers
 
             menuPoints.Add("List users", () => { ShowUsers(); return MenuChoice.ADMINISTRATION; });
             menuPoints.Add("Add user", () => { Adduser(); return MenuChoice.ADMINISTRATION; });
+            menuPoints.Add("Message to Earth", () => { MessageToEarth(); return MenuChoice.ADMINISTRATION; });
             menuPoints.Add("Approve news", () => { ApproveNews(); return MenuChoice.ADMINISTRATION; });
             menuPoints.Add("Back to main app", () => MenuChoice.APPLICATION);
             menuPoints.Add("Logout", () => LogOut());
@@ -113,6 +120,33 @@ namespace MarsKapu.Controllers
                 .AddChoices(menuPoints.Keys.ToArray())
                 );
             return menuPoints[menuPoint].Invoke();
+        }
+
+        private void MessageToEarth()
+        {
+            AppHeader();
+            var rule = new Rule("Message");
+            AnsiConsole.Write(rule);
+            var name = AnsiConsole.Ask<string>("Please enter the [orangered1]Message[/]: ");
+            Console.WriteLine();
+            AnsiConsole.Status()
+              .Start("[orangered1]Connecting[/]", ctx =>
+              {
+                  // Simulate some work
+                  ctx.Spinner(Spinner.Known.BouncingBar);
+                  AnsiConsole.MarkupLine("[gray]LOG: [/] Establishing contact with Earth");
+                  Thread.Sleep(900);
+                  AnsiConsole.MarkupLine("[gray]LOG: [/] Communication [green]ONLINE[/]");
+                  Thread.Sleep(900);
+                  ctx.Status("Saving Message");
+                  Thread.Sleep(900);
+                  ctx.Spinner(Spinner.Known.SimpleDots);
+
+                  ctx.Status("Finalizing");
+                  Thread.Sleep(1300);
+              });
+            AnsiConsole.Write(new Markup("[gray]LOG: [/][green] Message successfuly sent[/]"));
+            Console.ReadLine();
         }
     }
 }
